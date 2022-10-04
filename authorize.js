@@ -20,16 +20,16 @@ module.exports = async function (req, res, next) {
 
     const data = await db.query(sql, resultToken);
 
-    if (data.length > 0) {
-      next();
-    } else {
-      res.status(401).json({
-        status: 0,
-        message: "Token not valid, authorization denied",
-        data: req.body,
-        errors: null,
-      });
-    }
+    // if (data.length > 0) {
+    //   next();
+    // } else {
+    //   res.status(401).json({
+    //     status: 0,
+    //     message: "Token not valid, authorization denied",
+    //     data: req.body,
+    //     errors: null,
+    //   });
+    // }
   } catch (err) {
     res.status(401).json({
       status: 0,
