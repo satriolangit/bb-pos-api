@@ -1,7 +1,10 @@
 const express = require("express");
+const cors = require("cors");
+
 const db = require("./dbconfig");
 
 const app = express();
+app.use(cors);
 
 const authorizeRoute = require("./authorize");
 app.use(authorizeRoute);
