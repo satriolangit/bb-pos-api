@@ -4,13 +4,24 @@ const cors = require("cors");
 const db = require("./dbconfig");
 
 const app = express();
-app.use(cors);
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const authorizeRoute = require("./authorize");
-app.use(authorizeRoute);
+//app.use(authorizeRoute);
+
+app.get("/", (req, res) => {
+  res.json({ message: "ok" });
+});
 
 app.get("/itempos", async (req, res) => {
-  const sql = `SELECT distinct a.ItemParentID,a.ItemID,a.ItemName,a.ItemCode,Barcode,a.QuantityID
+  console.log("enter itempos endpoint");
+
+  try {
+    const sql = `SELECT distinct a.ItemParentID,a.ItemID,a.ItemName,a.ItemCode,Barcode,a.QuantityID
                   ,'' as ItemParentName
                   ,0 as Stock
                   ,'Pcs' as QuantityCode
@@ -28,11 +39,17 @@ app.get("/itempos", async (req, res) => {
                 AND b.InventoryID=?
                 AND a.Currency =?`;
 
-  const data = await db.query(sql, [req.query.InventoryID, req.query.Currency]);
+    const data = await db.query(sql, [
+      req.query.InventoryID,
+      req.query.Currency,
+    ]);
 
-  res.json({ dataItem: data });
+    res.json({ dataItem: data });
+  } catch (error) {
+    res.json(error);
+  }
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

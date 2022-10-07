@@ -7,7 +7,17 @@ const pool = mysql.createPool({
   user: "arcbukubon",
   password: "8Uku.B0n.",
   database: "bbnushal",
+  port: "6033",
 });
+
+// const pool = mysql.createPool({
+//   connectionLimit: 20,
+//   host: "localhost",
+//   user: "root",
+//   password: "wahyu123",
+//   database: "nushal",
+//   port: "6033",
+// });
 
 pool.getConnection((err, connection) => {
   if (err) {
